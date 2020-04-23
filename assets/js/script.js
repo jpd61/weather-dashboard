@@ -129,3 +129,21 @@ var pullCities() {
         }
     }
 };
+
+$('#search-button').on("click", function (event) {
+    event.preventDefault();
+    currentCity = $('#search-city').val();
+    getCurrentWeather(event);
+});
+
+$('#city-results').on("click", function(event) {
+    event.preventDefault();
+    $('#search-city').val(event.target.textContent);
+    currentCity = $('#search-city').val();
+    getCurrentWeather(event);
+});
+
+$('#clear-storage').on("click", function(event){
+    localStorage.clear();
+    pullCities();
+})
