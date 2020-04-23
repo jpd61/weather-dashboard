@@ -7,7 +7,7 @@ function getURLParams() {
     if (urlParams.has('key')) {
      openWeatherMapsAPIKey = urlParams.get('key');
     }
-};
+}
 
 // https://api.jquery.com/jQuery.ajax/
 // https://www.xul.fr/en/html5/fetch.php
@@ -34,7 +34,7 @@ function getBackgroundImage(){
         $('#header').attr("style", `background-image: url("https://images.unsplash.com/photo-1530908295418-a12e326966ba?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1080&fit=max&ixid=eyJhcHBfaWQiOjk5MjM4fQ")`);
         $('#artist-credit').html(`Photo by <a href="https://unsplash.com/@kenrickmills">Kenrick Mills</a> on <a href="https://unsplash.com">Unsplash</a>`);
     });
-};
+}
 
 // https://api.jquery.com/jQuery.ajax/
 // https://www.xul.fr/en/html5/fetch.php
@@ -60,8 +60,7 @@ function getCurrentConditions(event) {
         getFiveDayForecast(event);
         $('#header-text').text(response.name);
         let currentWeatherHTML = `
-            <h3>${response.name} ${currentMoment.format("(MM/DD/YY) h:mma")}<img src="${currentWeatherIcon}"></h3>
-            <br>
+            <h3>${response.name} ${currentMoment.format("(MM/DD/YY)")}<img src="${currentWeatherIcon}"></h3>
             <ul class="list-unstyled">
                 <li>Temperature: ${response.main.temp}&#8457;</li>
                 <li>Humidity: ${response.main.humidity}%</li>
@@ -96,7 +95,7 @@ function getCurrentConditions(event) {
             console.log("Current Weather API Error: city likely not found.");
             $('#search-error').text("City not found.");
         });
-};
+}
 
 // https://api.jquery.com/jQuery.ajax/
 // https://www.xul.fr/en/html5/fetch.php
@@ -129,14 +128,14 @@ function getFiveDayForecast(event) {
                 </div>
                 <br>`;
             }
-        };
+        }
         fiveDayForecastHTML += `</div>`;
         $('#five-day-forecast').html(fiveDayForecastHTML);
     })
         .fail(function () {
             console.log("Forecast API Error");
         });
-};
+}
 
 function saveCity(newCity) {
     let cityExists = false;
@@ -149,7 +148,7 @@ function saveCity(newCity) {
     if (cityExists === false) {
         localStorage.setItem('cities' + localStorage.length, newCity);
     }
-};
+}
 
 function renderCities() {
     $('#city-results').empty();
@@ -183,7 +182,7 @@ function renderCities() {
         }
     }
     
-};
+}
 
 function createEventListeners() {
     $('#search-button').on("click", function (event) {
@@ -205,13 +204,13 @@ function createEventListeners() {
         localStorage.clear();
         renderCities();
     });
-};
+}
 
 function mainApp() {
     getURLParams();
     renderCities();
     getCurrentConditions();
     createEventListeners();
-};
+}
 
 mainApp();
