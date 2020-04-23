@@ -39,18 +39,39 @@
 
 .uv-green{
     background-color: rgba(28, 228, 28, 0.25);
+    border-radius: 5px;
+    color: white;
 }
 .uv-yellow{
     background-color:rgba(255, 255, 0, 0.418);
+    border-radius: 5px;
+    color: white;
 }
 .uv-orange{
     background-color: rgba(255, 166, 0, 0.25);
+    border-radius: 5px;
+    color: white;
 }
 .uv-red{
     background-color: rgba(255, 0, 0, 0.25);
+    border-radius: 5px;
+    color: white;
 }
 .uv-violet{
     background-color: rgba(238, 130, 238, 0.25);
+    border-radius: 5px;
+    color: white;
+}
+
+#artist-credit{
+    font-size:.5em;
+    position:absolute;
+    right:2em;
+    bottom:1em;
+}
+#artist-credit a{
+    color:white;
+    text-decoration:none;
 }
 
 @media only screen and (max-width: 992px) {
