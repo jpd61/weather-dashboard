@@ -16,36 +16,39 @@ var getUrlPar = function() {
 var getFiveDay = function(event) {
     let city = $('#search-city').val();
     var apiUrl = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=" + owmApi;
-    fetch(apiUrl).done(function(response) {
-        let fiveDayHTML = `
-        <h2>5-Day Forecast</h2>
-        <div id="fiveDayForecastUl" class="d-inline-flex flex-wrap ">`;
-        for(let i = 0; i < response.list.length; i++) {
-            let dayData = response.list[i];
-            let dayTimeUTC = dayData.dt;
-            let timeOffset = response.city.timezone;
-            let timeOffsetHours = timeOffset / 60 / 60;
-            let thisMoment = moment.unix(dayTimeUTC).utc().utcOffset(timeOffsetHours);
-            let iconURL = "https://openweathermap.org/img/w/" + dayData.weahter[0].icon + ".png";
-            if (thisMoment.format("HH:mm:ss") === "11:00:00" || thisMoment.format("HH:mm:ss") === "12:00:00" || thisMoment.format("HH:mm:ss:") === "13:00:00") {
-                fiveDayHTML += `
-                <div class="weather-card card m-2 p0">
-                <ul class="list-unstyled p-3">
-                <li>${thisMoment.format("MM/DD/YY")}</li>
-                <li class="weather-icon"><img src="${iconURL}"></li>
-                <li>Temp: ${dayData.main.temp}&#8457;</li>
-                <li>Humidity: ${dayData.main.humidity}%</li>
-                </ul>
-                </div>
-                <br>`;
+    fetch(apiUrl).then(function(response) {
+        if(response.ok) {
+            response.json().then(function(response) {
+            let fiveDayHTML = `
+            <h2>5-Day Forecast</h2>
+            <div id="fiveDayForecastUl" class="d-inline-flex flex-wrap ">`;
+            for(i = 0; i < response.length; i++) {
+                let dayData = response.list[i];
+                let dayTimeUTC = dayData.dt;
+                let timeOffset = response.city.timezone;
+                let timeOffsetHours = timeOffset / 60 / 60;
+                let thisMoment = moment.unix(dayTimeUTC).utc().utcOffset(timeOffsetHours);
+                let iconURL = "https://openweathermap.org/img/w/" + dayData.weather[0].icon + ".png";
+                if (thisMoment.format("HH:mm:ss") === "11:00:00" || thisMoment.format("HH:mm:ss") === "12:00:00" || thisMoment.format("HH:mm:ss:") === "13:00:00") {
+                    fiveDayHTML += `
+                    <div class="weather-card card m-2 p0">
+                    <ul class="list-unstyled p-3">
+                    <li>${thisMoment.format("MM/DD/YY")}</li>
+                    <li class="weather-icon"><img src="${iconURL}"></li>
+                    <li>Temp: ${dayData.main.temp}&#8457;</li>
+                    <li>Humidity: ${dayData.main.humidity}%</li>
+                    </ul>
+                    </div>
+                    <br>`;
+                }
             }
-        };
-        fiveDayHTML += '</div>';
-        $('#five-day-forecast').html(fiveDayHTML);
-})
-    .fail(function() {
-        console.log("Forecast API Error");
-    });
+            fiveDayHTML += '</div>';
+            $('#five-day-forecast').html(fiveDayHTML);
+            });
+        } else {
+            console.log("Forecast API Error");
+        }
+    })
 };
 
 // current weather
@@ -55,17 +58,17 @@ var getCurrentWeather = function (event) {
     let longitude;
     let latitude;
     var apiUrl = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=" + owmApi;
-    let currentWeatherIcon = "https://openwathermap.org/img/w/" + response.weather[0].icon + ".png";
-    let UTCtime = response.dt;
-    let timeOffset = response.timezone;
-    let timeOffsetHours = timeOffset / 60 / 60;
-    let currentMoment = moment.unix(UTCtime).utc().utcOffset(timeOffsetHours);
-    
     fetch(apiUrl).then(function(response) { 
         if(response.ok) {
+            response.json().then(function(response) {
+                var currentWeatherIcon = "https://openweathermap.org/img/w/" + response.weather[0].icon + ".png";
+                let UTCtime = response.dt;
+                let timeOffset = response.timezone;
+                let timeOffsetHours = timeOffset / 60 / 60;
+                let currentMoment = moment.unix(UTCtime).utc().utcOffset(timeOffsetHours);
             saveCity(city);
             $('#search-error').text("");
-            renderCities();
+            pullCities();
             getFiveDay(event);
             $('header-text').text(response.name);
             let currentHTML = `
@@ -79,6 +82,7 @@ var getCurrentWeather = function (event) {
             $('#current-weather').html(currentHTML);
             latitude = response.coord.lat;
             longitude = response.coord.lat;
+            });
         } else {
             console.log("Current Weather API Error: try another city.");
             $('#search-error').text("City not found!");
@@ -88,7 +92,7 @@ var getCurrentWeather = function (event) {
 
 var saveCity = function(newCity) {
     let cityExists = false;
-    for (let i = 0; i < localStorage.length; i++) {
+    for (i = 0; i < localStorage.length; i++) {
         if (localStorage["cities" + i] === newCity) {
             cityExists = true;
             break;
@@ -111,7 +115,7 @@ var pullCities = function() {
         let lastCityKey = "cities"+(localStorage.length-1);
         lastCity = localStorage.getItem(lastCityKey);
         $('#search-city').attr("value", lastCity);
-        for (let i = 0; i < localStorage.length; i++) {
+        for (i = 0; i < localStorage.length; i++) {
             let city = localStorage.getItem("cities" + i);
             let cityEl;
             if (currentCity===""){
