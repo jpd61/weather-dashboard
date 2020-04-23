@@ -3,6 +3,7 @@ var usApi = "R_fPrwXAPD_TNN3gw5mXZOhXQ52yQ8aPTLvMPRe3U4Q";
 var currentCity = "";
 var lastCity = "";
 var city = $('search-city').val();
+var apiURL = "https://api.openweathermap.org/data/2.5/weather?=" + city + "&units=imperial" + "&APPID=" + owmApi;
 
 // Use URLSearchParams to get URL parameters and check url for API key
 // https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams
@@ -13,12 +14,11 @@ var getUrlPar = function() {
     }
 };
 
+// current weather
 var getCurrentWeather = function (event) {
     currentCity = city;
     let longitude;
     let latitude;
-    let apiURL = "https://api.openweathermap.org/data/2.5/weather?=" + city + "&units=imperial"
-     + "&APPID=" + owmApi;
     
     fetch(apiUrl).done(function(response) {
         saveCity(city);
@@ -30,7 +30,7 @@ var getCurrentWeather = function (event) {
         let currentMoment = moment.unix(UTCtime).utc().utcOffset(timeOffsetHours);
         renderCities();
         getBackgroundImage();
-        getFiveDayForecast(event);
+        getFiveDay(event);
         $('header-text').text(response.name);
         let currentHTML = `
             <h3>Current Conditions<img src="${currentWeatherIcon}"></h3>
@@ -48,4 +48,38 @@ var getCurrentWeather = function (event) {
             console.log("Current Weather API Error: try another city.");
             $('#search-error').text("City not found!");
         });
+};
+
+// five day forcast
+var getFiveDay = function(event) {
+    fetch(apiUrl).done(function(response) {
+        let fiveDayHTML = `
+        <h2>5-Day Forecast</h2>
+        <div id="fiveDayForecastUl" class="d-inline-flex flex-wrap ">`;
+        for(let i = 0; i < response.list.length; i++) {
+            let dayData = response.list[i];
+            let dayTimeUTC = dayData.dt;
+            let timeOffset = response.city.timezone;
+            let timeOffsetHours = timeOffset; / 60 / 60;
+            let thisMoment = moment.unix(dayTimeUTC).utc().utcOffset(timeOffsetHours);
+            let iconURL = "https://openweathermap.org/img/w/" + dayData.weahter[0].icon + ".png";
+            if (thisMoment.format("HH:mm:ss") === "11:00:00" || thisMoment.format("HH:mm:ss") === "12:00:00" || thisMoment.format("HH:mm:ss:") === "13:00:00") {
+                fiveDayHTML += `
+                <div class="weather-card card m-2 p0">
+                <ul class="list-unstyled p-3">
+                <li>${thisMoment.format("MM/DD/YY")}</li>
+                <li class="weather-icon"><img src="${iconURL}"></li>
+                <li>Temp: ${dayData.main.temp}&#8457;</li>
+                <li>Humidity: ${dayData.main.humidity}%</li>
+                </ul>
+                </div>
+                <br>`;
+            }
+        };
+        fiveDayHTML += '</div>';
+        $('#five-day-forecast').html(fiveDayHTML);
+})
+    .fail(function() {
+        console.log("Forecast API Error");
+    });
 }
