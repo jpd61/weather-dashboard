@@ -3,7 +3,7 @@ var usApi = "R_fPrwXAPD_TNN3gw5mXZOhXQ52yQ8aPTLvMPRe3U4Q";
 var currentCity = "";
 var lastCity = "";
 var city = $('search-city').val();
-var apiURL = "https://api.openweathermap.org/data/2.5/weather?=" + city + "&units=imperial" + "&APPID=" + owmApi;
+var apiUrl = "https://api.openweathermap.org/data/2.5/weather?=" + city + "&units=imperial" + "&APPID=" + owmApi;
 
 // Use URLSearchParams to get URL parameters and check url for API key
 // https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams
@@ -54,36 +54,36 @@ var getCurrentWeather = function (event) {
     let longitude;
     let latitude;
     
-    fetch(apiUrl).done(function(response) {
-        saveCity(city);
-        $('#search-error').text("");
-        currentWeatherIcon="https://openwathermap.org/img/w/" + response.weather[0].icon + ".png";
-        let UTCtime = response.dt;
-        let timeOffset = response.timezone;
-        let timeOffsetHours = timeOffset / 60 / 60;
-        let currentMoment = moment.unix(UTCtime).utc().utcOffset(timeOffsetHours);
-        renderCities();
-        getFiveDay(event);
-        $('header-text').text(response.name);
-        let currentHTML = `
-            <h3>Current Conditions<img src="${currentWeatherIcon}"></h3>
-            <h6>${currentMoment.format("MM/DD/YY h:mma")} local time</h6>
-            <br>
-            <ul class="list-unstyled">
-                <li>Temperature: ${response.main.temp}&#8457;</li>
-                <li>Humidity: ${response.main.humidity}%</li>
-            </ul>`;
-        $('#current-weather').html(currentHTML);
-        latitude = response.coord.lat;
-        longitude = response.coord.lat;
-    })
-        .fail(function () {
+    fetch(apiUrl).then(function(response) {
+        if(response.ok) {
+            saveCity(city);
+            $('#search-error').text("");
+            currentWeatherIcon="https://openwathermap.org/img/w/" + response.weather[0].icon + ".png";
+            let UTCtime = response.dt;
+            let timeOffset = response.timezone;
+            let timeOffsetHours = timeOffset / 60 / 60;
+            let currentMoment = moment.unix(UTCtime).utc().utcOffset(timeOffsetHours);
+            renderCities();
+            getFiveDay(event);
+            $('header-text').text(response.name);
+            let currentHTML = `
+                <h3>Current Conditions<img src="${currentWeatherIcon}"></h3>
+                <h6>${currentMoment.format("MM/DD/YY h:mma")} local time</h6>
+                <br>
+                <ul class="list-unstyled">
+                    <li>Temperature: ${response.main.temp}&#8457;</li>
+                    <li>Humidity: ${response.main.humidity}%</li>
+                </ul>`;
+            $('#current-weather').html(currentHTML);
+            latitude = response.coord.lat;
+            longitude = response.coord.lat;
+        } else {
             console.log("Current Weather API Error: try another city.");
             $('#search-error').text("City not found!");
-        });
-};
+    }
+});
 
-var saveCity(newCity) {
+var saveCity = function(newCity) {
     let cityExists = false;
     for (let i = 0; i < localStorage.length; i++) {
         if (localStorage["cities" + i] === newCity) {
@@ -96,7 +96,7 @@ var saveCity(newCity) {
     }
 };
 
-var pullCities() {
+var pullCities = function() {
     $('#cities-results').empty();
     if (localStorage.length === 0){
         if (lastCity){
@@ -149,7 +149,7 @@ $('#clear-storage').on("click", function(event){
 
 var runScript = function () {
     getUrlPar();
-    renderCities();
+    pullCities();
     getCurrentWeather();
 };
 
