@@ -9,6 +9,8 @@ function getURLParams() {
     }
 };
 
+// https://api.jquery.com/jQuery.ajax/
+// https://www.xul.fr/en/html5/fetch.php
 function getBackgroundImage(){
     let unsplashKey="R_fPrwXAPD_TNN3gw5mXZOhXQ52yQ8aPTLvMPRe3U4Q";
     let bgQuery="https://api.unsplash.com/search/photos?client_id="+unsplashKey+"&query="+currentCity;
@@ -34,6 +36,8 @@ function getBackgroundImage(){
     });
 };
 
+// https://api.jquery.com/jQuery.ajax/
+// https://www.xul.fr/en/html5/fetch.php
 function getCurrentConditions(event) {
     let city = $('#search-city').val();
     currentCity= $('#search-city').val();
@@ -95,7 +99,8 @@ function getCurrentConditions(event) {
         });
 };
 
-
+// https://api.jquery.com/jQuery.ajax/
+// https://www.xul.fr/en/html5/fetch.php
 function getFiveDayForecast(event) {
     let city = $('#search-city').val();
     var queryURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + city + "&units=imperial" + "&APPID=" + openWeatherMapsAPIKey;
