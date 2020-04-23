@@ -65,7 +65,7 @@ function getCurrentConditions(event) {
                 <li>Temperature: ${response.main.temp}&#8457;</li>
                 <li>Humidity: ${response.main.humidity}%</li>
                 <li>Wind Speed: ${response.wind.speed} mph</li>
-                <li id="uvIndex">Mid-day UV Index:</li>
+                <li id="uvIndex">UV Index:</li>
             </ul>`;
         $('#current-weather').html(currentWeatherHTML);
         latitude = response.coord.lat;
@@ -77,7 +77,7 @@ function getCurrentConditions(event) {
             method: "GET"
         }).done(function (response) {
             let uvIndex = response.value;
-            $('#uvIndex').html(`Mid-day UV Index: <span id="uvVal"> ${uvIndex}</span>`);
+            $('#uvIndex').html(`UV Index: <span id="uvVal"> ${uvIndex}</span>`);
             if (uvIndex>=0 && uvIndex<3){
                 $('#uvVal').attr("class", "uv-green");
             } else if (uvIndex>=3 && uvIndex<6){
@@ -107,7 +107,7 @@ function getFiveDayForecast(event) {
         method: "GET"
     }).done(function (response) {
         let fiveDayForecastHTML = `
-        <h2>5-Day Forecast</h2>
+        <h2>5-Day Forecast:</h2>
         <div id="fiveDayForecastUl" class="d-inline-flex flex-wrap ">`;
         for (let i = 0; i < response.list.length; i++) {
             let dayData = response.list[i];
