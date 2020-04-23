@@ -79,15 +79,11 @@ function getCurrentConditions(event) {
             let uvIndex = response.value;
             $('#uvIndex').html(`UV Index: <span id="uvVal"> ${uvIndex}</span>`);
             if (uvIndex>=0 && uvIndex<3){
-                $('#uvVal').attr("class", "uv-green");
-            } else if (uvIndex>=3 && uvIndex<6){
-                $('#uvVal').attr("class", "uv-yellow");
-            } else if (uvIndex>=6 && uvIndex<8){
-                $('#uvVal').attr("class", "uv-orange");
-            } else if (uvIndex>=8 && uvIndex<11){
-                $('#uvVal').attr("class", "uv-red");
-            } else if (uvIndex>=11){
-                $('#uvVal').attr("class", "uv-violet");
+                $('#uvVal').attr("class", "uv-favorable");
+            } else if (uvIndex>=3 && uvIndex<8){
+                $('#uvVal').attr("class", "uv-moderate");
+            } else if (uvIndex>=8){
+                $('#uvVal').attr("class", "uv-severe");
             }
         });
     })

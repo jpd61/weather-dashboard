@@ -49,32 +49,20 @@
     color: white;
 }
 
-.uv-green{
+.uv-favorable{
     background-color: green;
     border-radius: 5px;
     color: white;
 }
 
-.uv-yellow{
-    background-color:yellow;
-    border-radius: 5px;
-    color: white;
-}
-
-.uv-orange{
+.uv-moderate{
     background-color: orange;
     border-radius: 5px;
     color: white;
 }
 
-.uv-red{
+.uv-severe{
     background-color: red;
-    border-radius: 5px;
-    color: white;
-}
-
-.uv-violet{
-    background-color: violet;
     border-radius: 5px;
     color: white;
 }
