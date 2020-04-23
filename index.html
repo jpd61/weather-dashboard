@@ -20,19 +20,25 @@
         <h1 id="header-text"></h1>
     </div>
 
-    <div id="content-left" class="col-md-4">
-        <form>
-            <label for="search-city">Search for a City</label>
-            <div class="form-row">
-                <input id="search-city" class="form-control" name="city" value="Fort Worth"></input>
-                <button id="search-button" class="btn btn-primary" type="submit"><i class="fas fa-search"></i></button>
-            </div>
-        </form>
-    </div>
+    <div id="content" class="container">
+        <div class="row">
 
-    <div id="content-right" class="col-md-9 pt-4">
-        <div id="current-weather"></div>
-        <div id="five-day" class="mt-f"></div>
+            <div id="content-left" class="col-md-3">
+                <form>
+                    <label for="search-city">Search for a City</label>
+                    <div class="form-row">
+                        <input id="search-city" class="form-control" name="city" value="Fort Worth"></input>
+                        <button id="search-button" class="btn btn-primary" type="submit"><i class="fas fa-search"></i></button>
+                    </div>
+                </form>
+            </div>
+
+
+            <div id="content-right" class="col-md-9 pt-4">
+                <div id="current-weather"></div>
+                <div id="five-day" class="mt-f"></div>
+            </div>
+        </div>
     </div>
 
     <!-- Scripts in Use -->
