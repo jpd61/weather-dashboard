@@ -1,11 +1,11 @@
-var openWeatherMapsAPIKey = "788d5638d7c8e354a162d6c9747d1bdf";
+var owmAPI = "788d5638d7c8e354a162d6c9747d1bdf";
 var currentCity = "";
 var lastCity = "";
 
 function getURLParams() {
     let urlParams = new URLSearchParams(window.location.search);
     if (urlParams.has('key')) {
-     openWeatherMapsAPIKey = urlParams.get('key');
+        owmAPI = urlParams.get('key');
     }
 }
 
@@ -43,7 +43,7 @@ function getCurrentConditions(event) {
     currentCity= $('#search-city').val();
     let longitude;
     let latitude;
-    let queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&units=imperial" + "&APPID=" + openWeatherMapsAPIKey;
+    let queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&units=imperial" + "&APPID=" + owmAPI;
     $.ajax({
         url: queryURL,
         method: "GET"
@@ -70,7 +70,7 @@ function getCurrentConditions(event) {
         $('#current-weather').html(currentWeatherHTML);
         latitude = response.coord.lat;
         longitude = response.coord.lon;
-        let uvQueryURL = "api.openweathermap.org/data/2.5/uvi?lat=" + latitude + "&lon=" + longitude + "&APPID=" + openWeatherMapsAPIKey;
+        let uvQueryURL = "api.openweathermap.org/data/2.5/uvi?lat=" + latitude + "&lon=" + longitude + "&APPID=" + owmAPI;
         uvQueryURL = "https://cors-anywhere.herokuapp.com/" + uvQueryURL;
         $.ajax({
             url: uvQueryURL,
@@ -97,7 +97,7 @@ function getCurrentConditions(event) {
 // https://www.xul.fr/en/html5/fetch.php
 function getFiveDayForecast(event) {
     let city = $('#search-city').val();
-    var queryURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + city + "&units=imperial" + "&APPID=" + openWeatherMapsAPIKey;
+    var queryURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + city + "&units=imperial" + "&APPID=" + owmAPI;
     $.ajax({
         url: queryURL,
         method: "GET"
