@@ -24,7 +24,7 @@ var getFiveDay = function(event) {
             let dayData = response.list[i];
             let dayTimeUTC = dayData.dt;
             let timeOffset = response.city.timezone;
-            let timeOffsetHours = timeOffset; / 60 / 60;
+            let timeOffsetHours = timeOffset / 60 / 60;
             let thisMoment = moment.unix(dayTimeUTC).utc().utcOffset(timeOffsetHours);
             let iconURL = "https://openweathermap.org/img/w/" + dayData.weahter[0].icon + ".png";
             if (thisMoment.format("HH:mm:ss") === "11:00:00" || thisMoment.format("HH:mm:ss") === "12:00:00" || thisMoment.format("HH:mm:ss:") === "13:00:00") {
