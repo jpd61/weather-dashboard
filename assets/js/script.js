@@ -14,42 +14,6 @@ var getUrlPar = function() {
     }
 };
 
-// current weather
-var getCurrentWeather = function (event) {
-    currentCity = city;
-    let longitude;
-    let latitude;
-    
-    fetch(apiUrl).done(function(response) {
-        saveCity(city);
-        $('#search-error').text("");
-        currentWeatherIcon="https://openwathermap.org/img/w/" + response.weather[0].icon + ".png";
-        let UTCtime = response.dt;
-        let timeOffset = response.timezone;
-        let timeOffsetHours = timeOffset / 60 / 60;
-        let currentMoment = moment.unix(UTCtime).utc().utcOffset(timeOffsetHours);
-        renderCities();
-        getBackgroundImage();
-        getFiveDay(event);
-        $('header-text').text(response.name);
-        let currentHTML = `
-            <h3>Current Conditions<img src="${currentWeatherIcon}"></h3>
-            <h6>${currentMoment.format("MM/DD/YY h:mma")} local time</h6>
-            <br>
-            <ul class="list-unstyled">
-                <li>Temperature: ${response.main.temp}&#8457;</li>
-                <li>Humidity: ${response.main.humidity}%</li>
-            </ul>`;
-        $('#current-weather').html(currentHTML);
-        latitude = response.coord.lat;
-        longitude = response.coord.lat;
-    })
-        .fail(function () {
-            console.log("Current Weather API Error: try another city.");
-            $('#search-error').text("City not found!");
-        });
-};
-
 // five day forcast
 var getFiveDay = function(event) {
     fetch(apiUrl).done(function(response) {
@@ -82,6 +46,41 @@ var getFiveDay = function(event) {
     .fail(function() {
         console.log("Forecast API Error");
     });
+};
+
+// current weather
+var getCurrentWeather = function (event) {
+    currentCity = city;
+    let longitude;
+    let latitude;
+    
+    fetch(apiUrl).done(function(response) {
+        saveCity(city);
+        $('#search-error').text("");
+        currentWeatherIcon="https://openwathermap.org/img/w/" + response.weather[0].icon + ".png";
+        let UTCtime = response.dt;
+        let timeOffset = response.timezone;
+        let timeOffsetHours = timeOffset / 60 / 60;
+        let currentMoment = moment.unix(UTCtime).utc().utcOffset(timeOffsetHours);
+        renderCities();
+        getFiveDay(event);
+        $('header-text').text(response.name);
+        let currentHTML = `
+            <h3>Current Conditions<img src="${currentWeatherIcon}"></h3>
+            <h6>${currentMoment.format("MM/DD/YY h:mma")} local time</h6>
+            <br>
+            <ul class="list-unstyled">
+                <li>Temperature: ${response.main.temp}&#8457;</li>
+                <li>Humidity: ${response.main.humidity}%</li>
+            </ul>`;
+        $('#current-weather').html(currentHTML);
+        latitude = response.coord.lat;
+        longitude = response.coord.lat;
+    })
+        .fail(function () {
+            console.log("Current Weather API Error: try another city.");
+            $('#search-error').text("City not found!");
+        });
 };
 
 var saveCity(newCity) {
@@ -146,4 +145,12 @@ $('#city-results').on("click", function(event) {
 $('#clear-storage').on("click", function(event){
     localStorage.clear();
     pullCities();
-})
+});
+
+var runScript = function () {
+    getUrlPar();
+    renderCities();
+    getCurrentWeather();
+};
+
+runScript();
