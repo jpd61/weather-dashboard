@@ -33,6 +33,8 @@
 
 .weather-card{
     width: 9rem;
+    background-color: blue;
+    color: white;
 }
 
 .uv-green{
