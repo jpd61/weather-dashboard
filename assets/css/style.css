@@ -1,14 +1,20 @@
 #header{
     background-image: url('./assets/images/defaultBG.jpeg');
-    background-size:cover;
-    background-position-y: 50%;
+    background-size: cover;
+    background-position-y: 40%;
     color:white;
     background-color:rgb(83, 83, 83);
     position:relative !important;
 }
 
 #header h1{
-    font-size:5em;
+    font-size: 400%;
+    margin-left: 1em;
+    text-transform: uppercase;
+    font-weight: bold;
+    color: #FFFFFF;
+    background: #0e8dbc;
+    text-shadow: 0 1px 0 #CCCCCC, 0 2px 0 #c9c9c9, 0 3px 0 #bbb, 0 4px 0 #b9b9b9, 0 5px 0 #aaa, 0 6px 1px rgba(0,0,0,.1), 0 0 5px rgba(0,0,0,.1), 0 1px 3px rgba(0,0,0,.3), 0 3px 5px rgba(0,0,0,.2), 0 5px 10px rgba(0,0,0,.25), 0 10px 10px rgba(0,0,0,.2), 0 20px 20px rgba(0,0,0,.15);
 }
 
 #search-city{
@@ -29,6 +35,11 @@
     text-decoration: none;
     font-size:.75em;
     margin: .5em 0em 0em .5em;
+}
+
+.jumbotron {
+    padding: 1rem;
+    border-radius: 0;
 }
 
 .weather-card{
@@ -87,9 +98,7 @@
     }
 }
 @media only screen and (max-width: 575px) {
-    #header h1{
-        font-size:15vw !important;
-    }
+
     #fiveDayForecastUl{
         justify-content: center;
     }
