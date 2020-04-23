@@ -162,28 +162,31 @@ var pullCities = function() {
     }
 };
 
-$('#search-button').on("click", function (event) {
-    event.preventDefault();
-    currentCity = $('#search-city').val();
-    getCurrentWeather(event);
-});
+var eventListeners = function() {
+    $('#search-button').on("click", function (event) {
+        event.preventDefault();
+        currentCity = $('#search-city').val();
+        getCurrentWeather(event);
+    });
 
-$('#city-results').on("click", function(event) {
-    event.preventDefault();
-    $('#search-city').val(event.target.textContent);
-    currentCity = $('#search-city').val();
-    getCurrentWeather(event);
-});
+    $('#city-results').on("click", function(event) {
+        event.preventDefault();
+        $('#search-city').val(event.target.textContent);
+        currentCity = $('#search-city').val();
+        getCurrentWeather(event);
+    });
 
-$('#clear-storage').on("click", function(event){
-    localStorage.clear();
-    pullCities();
-});
+    $('#clear-storage').on("click", function(event){
+        localStorage.clear();
+        pullCities();
+    });
+};
 
 var runScript = function() {
     getUrlPar();
     pullCities();
     getCurrentWeather();
+    eventListeners();
 };
 
 runScript();
