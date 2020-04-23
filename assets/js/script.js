@@ -82,4 +82,17 @@ var getFiveDay = function(event) {
     .fail(function() {
         console.log("Forecast API Error");
     });
-}
+};
+
+var saveCity(newCity) {
+    let cityExists = false;
+    for (let i = 0; i < localStorage.length; i++) {
+        if (localStorage["cities" + i] === newCity) {
+            cityExists = true;
+            break;
+        }
+    }
+    if (cityExists === false) {
+        localStorage.setItem('cities' + localStorage.length, newCity);
+    }
+};
