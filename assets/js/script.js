@@ -119,14 +119,14 @@ function getFiveDayForecast(event) {
             if (thisMoment.format("HH:mm:ss") === "11:00:00" || thisMoment.format("HH:mm:ss") === "12:00:00" || thisMoment.format("HH:mm:ss") === "13:00:00") {
                 fiveDayForecastHTML += `
                 <div class="weather-card card m-2 p0">
-                <ul class="list-unstyled p-3">
-                <li>${thisMoment.format("MM/DD/YY")}</li>
-                <li class="weather-icon"><img src="${iconURL}"></li>
-                <li>Temp: ${dayData.main.temp}&#8457;</li>
-                <li>Humidity: ${dayData.main.humidity}%</li>
-                </ul>
-                </div>
-                <br>`;
+                    <ul class="list-unstyled p-3">
+                        <li>${thisMoment.format("MM/DD/YY")}</li>
+                        <li class="weather-icon"><img src="${iconURL}"></li>
+                        <li>Temp: ${dayData.main.temp}&#8457;</li>
+                        <br>
+                        <li>Humidity: ${dayData.main.humidity}%</li>
+                    </ul>
+                </div>`;
             }
         }
         fiveDayForecastHTML += `</div>`;
@@ -156,7 +156,7 @@ function renderCities() {
         if (lastCity){
             $('#search-city').attr("value", lastCity);
         } else {
-            $('#search-city').attr("value", "Los Angeles");
+            $('#search-city').attr("value", "Austin");
         }
     } else {
         let lastCityKey="cities"+(localStorage.length-1);
