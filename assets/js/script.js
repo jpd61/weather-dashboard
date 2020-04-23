@@ -12,67 +12,30 @@ var getUrlPar = function() {
     }
 };
 
-// current weather
 // https://api.jquery.com/jQuery.ajax/
 // https://www.xul.fr/en/html5/fetch.php
-var getCurrentWeather = function (event) {
-    let city = $('#search-city').val();
-    currentCity = $('#search-city').val();
-    let longitude;
-    let latitude;
-    var apiUrl = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=" + owmApi;
+function getBackgroundImage(){
+    let bgQuery="https://api.unsplash.com/search/photos?client_id="+usApi+"&query="+currentCity;
     $.ajax({
-        url: apiUrl,
-        method: "GET"  
+        url: bgQuery,
+        method: "GET"
     }).done(function (response) {
-        saveCity(city);
-        $('#search-error').text("");
-        currentWeatherIcon="https://openweathermap.org/img/w/" + response.weather[0].icon + ".png";
-        let currentTimeUTC = response.dt;
-        let currentTimeZoneOffset = response.timezone;
-        let currentTimeZoneOffsetHours = currentTimeZoneOffset / 60 / 60;
-        let currentMoment = moment.unix(currentTimeUTC).utc().utcOffset(currentTimeZoneOffsetHours);
-        pullCities();
-        getFiveDay(event);
-        $('#header-text').text(response.name);
-        let currentWeatherHTML = `
-            <h3>Current Conditions<img src="${currentWeatherIcon}"></h3>
-            <h6>${currentMoment.format("MM/DD/YY h:mma")} local time</h6>
-            <br>
-            <ul class="list-unstyled">
-                <li>Temperature: ${response.main.temp}&#8457;</li>
-                <li>Humidity: ${response.main.humidity}%</li>
-                <li>Wind Speed: ${response.wind.speed} mph</li>
-                <li id="uvIndex">Mid-day UV Index:</li>
-            </ul>`;
-        $('#current-weather').html(currentWeatherHTML);
-        latitude = response.coord.lat;
-        longitude = response.coord.lon;
-        let uvQueryURL = "api.openweathermap.org/data/2.5/uvi?lat=" + latitude + "&lon=" + longitude + "&APPID=" + owmApi;
-        uvQueryURL = "https://cors-anywhere.herokuapp.com/" + uvQueryURL;
-        $.ajax({
-            url: uvQueryURL,
-            method: "GET"
-        }).done(function (response) {
-            uvIndex = response.value;
-            $('#uvIndex').html(`Mid-day UV Index: <span id="uvVal"> ${uvIndex}</span>`);
-            if (uvIndex>=0 && uvIndex<3){
-                $('#uvVal').attr("class", "uv-green");
-            } else if (uvIndex>=3 && uvIndex<6){
-                $('#uvVal').attr("class", "uv-yellow");
-            } else if (uvIndex>=6 && uvIndex<8){
-                $('#uvVal').attr("class", "uv-orange");
-            } else if (uvIndex>=8 && uvIndex<11){
-                $('#uvVal').attr("class", "uv-red");
-            } else if (uvIndex>=11){
-                $('#uvVal').attr("class", "uv-violet");
-            }
-        });
-    })
-        .fail(function () {
-            console.log("Current Weather API Error: city likely not found.");
-            $('#search-error').text("City not found.");
-        });
+        if (response.total>0){
+            let bgImage = response.results[0].urls.regular;
+            let artistCredit = `Photo by <a href="${response.results[0].user.links.html}">${response.results[0].user.name}</a> on <a href="https://unsplash.com">Unsplash</a>`;
+            $('#header').attr("style", `background-image: url(${bgImage})`);
+            $('#artist-credit').html(artistCredit);
+        } else {
+            console.log("No Unsplash Image Results");
+            $('#header').attr("style", `background-image: url("https://images.unsplash.com/photo-1530908295418-a12e326966ba?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1080&fit=max&ixid=eyJhcHBfaWQiOjk5MjM4fQ")`);
+            $('#artist-credit').html(`Photo by <a href="https://unsplash.com/@kenrickmills">Kenrick Mills</a> on <a href="https://unsplash.com">Unsplash</a>`);
+        }
+        
+    }).fail(function(response){
+        console.log("Unsplash API Error: rate limit likely exceeded.");
+        $('#header').attr("style", `background-image: url("https://images.unsplash.com/photo-1530908295418-a12e326966ba?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1080&fit=max&ixid=eyJhcHBfaWQiOjk5MjM4fQ")`);
+        $('#artist-credit').html(`Photo by <a href="https://unsplash.com/@kenrickmills">Kenrick Mills</a> on <a href="https://unsplash.com">Unsplash</a>`);
+    });
 };
 
 // five day forecast
@@ -115,6 +78,72 @@ var getFiveDay = function(event) {
             console.log("Forecast API Error");
         });
 };
+
+// current weather
+// https://api.jquery.com/jQuery.ajax/
+// https://www.xul.fr/en/html5/fetch.php
+var getCurrentWeather = function (event) {
+    let city = $('#search-city').val();
+    currentCity = $('#search-city').val();
+    let longitude;
+    let latitude;
+    var apiUrl = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=" + owmApi;
+    $.ajax({
+        url: apiUrl,
+        method: "GET"  
+    }).done(function (response) {
+        saveCity(city);
+        $('#search-error').text("");
+        let currentWeatherIcon="https://openweathermap.org/img/w/" + response.weather[0].icon + ".png";
+        let currentTimeUTC = response.dt;
+        let currentTimeZoneOffset = response.timezone;
+        let currentTimeZoneOffsetHours = currentTimeZoneOffset / 60 / 60;
+        let currentMoment = moment.unix(currentTimeUTC).utc().utcOffset(currentTimeZoneOffsetHours);
+        pullCities();
+        getBackgroundImage();
+        getFiveDay(event);
+        $('#header-text').text(response.name);
+        let currentWeatherHTML = `
+            <h3>Current Conditions<img src="${currentWeatherIcon}"></h3>
+            <h6>${currentMoment.format("MM/DD/YY h:mma")} local time</h6>
+            <br>
+            <ul class="list-unstyled">
+                <li>Temperature: ${response.main.temp}&#8457;</li>
+                <li>Humidity: ${response.main.humidity}%</li>
+                <li>Wind Speed: ${response.wind.speed} mph</li>
+                <li id="uvIndex">Mid-day UV Index:</li>
+            </ul>`;
+        $('#current-weather').html(currentWeatherHTML);
+        latitude = response.coord.lat;
+        longitude = response.coord.lon;
+        let uvQueryURL = "api.openweathermap.org/data/2.5/uvi?lat=" + latitude + "&lon=" + longitude + "&APPID=" + owmApi;
+        uvQueryURL = "https://cors-anywhere.herokuapp.com/" + uvQueryURL;
+        $.ajax({
+            url: uvQueryURL,
+            method: "GET"
+        }).done(function (response) {
+            let uvIndex = response.value;
+            $('#uvIndex').html(`Mid-day UV Index: <span id="uvVal"> ${uvIndex}</span>`);
+            if (uvIndex>=0 && uvIndex<3){
+                $('#uvVal').attr("class", "uv-green");
+            } else if (uvIndex>=3 && uvIndex<6){
+                $('#uvVal').attr("class", "uv-yellow");
+            } else if (uvIndex>=6 && uvIndex<8){
+                $('#uvVal').attr("class", "uv-orange");
+            } else if (uvIndex>=8 && uvIndex<11){
+                $('#uvVal').attr("class", "uv-red");
+            } else if (uvIndex>=11){
+                $('#uvVal').attr("class", "uv-violet");
+            }
+        });
+    })
+        .fail(function () {
+            console.log("Current Weather API Error: city likely not found.");
+            $('#search-error').text("City not found.");
+        });
+};
+
+
 
 var saveCity = function(newCity) {
     let cityExists = false;
