@@ -9,7 +9,7 @@
 
 #header h1{
     font-size: 400%;
-    margin-left: 1em;
+    text-align: center;
     text-transform: uppercase;
     font-weight: bold;
     -webkit-background-clip: text;

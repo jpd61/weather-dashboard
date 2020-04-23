@@ -11,33 +11,6 @@ function getURLParams() {
 
 // https://api.jquery.com/jQuery.ajax/
 // https://www.xul.fr/en/html5/fetch.php
-function getBackgroundImage(){
-    let unsplashKey="R_fPrwXAPD_TNN3gw5mXZOhXQ52yQ8aPTLvMPRe3U4Q";
-    let bgQuery="https://api.unsplash.com/search/photos?client_id="+unsplashKey+"&query="+currentCity;
-    $.ajax({
-        url: bgQuery,
-        method: "GET"
-    }).done(function (response) {
-        if (response.total>0){
-            let bgImage = response.results[0].urls.regular;
-            let artistCredit = `Photo by <a href="${response.results[0].user.links.html}">${response.results[0].user.name}</a> on <a href="https://unsplash.com">Unsplash</a>`;
-            $('#header').attr("style", `background-image: url(${bgImage})`);
-            $('#artist-credit').html(artistCredit);
-        } else {
-            console.log("No Unsplash Image Results");
-            $('#header').attr("style", `background-image: url("https://images.unsplash.com/photo-1530908295418-a12e326966ba?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1080&fit=max&ixid=eyJhcHBfaWQiOjk5MjM4fQ")`);
-            $('#artist-credit').html(`Photo by <a href="https://unsplash.com/@kenrickmills">Kenrick Mills</a> on <a href="https://unsplash.com">Unsplash</a>`);
-        }
-        
-    }).fail(function(response){
-        console.log("Unsplash API Error: rate limit likely exceeded.");
-        $('#header').attr("style", `background-image: url("https://images.unsplash.com/photo-1530908295418-a12e326966ba?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1080&fit=max&ixid=eyJhcHBfaWQiOjk5MjM4fQ")`);
-        $('#artist-credit').html(`Photo by <a href="https://unsplash.com/@kenrickmills">Kenrick Mills</a> on <a href="https://unsplash.com">Unsplash</a>`);
-    });
-}
-
-// https://api.jquery.com/jQuery.ajax/
-// https://www.xul.fr/en/html5/fetch.php
 function getCurrentConditions(event) {
     let city = $('#search-city').val();
     currentCity= $('#search-city').val();
@@ -56,7 +29,6 @@ function getCurrentConditions(event) {
         let currentTimeZoneOffsetHours = currentTimeZoneOffset / 60 / 60;
         let currentMoment = moment.unix(currentTimeUTC).utc().utcOffset(currentTimeZoneOffsetHours);
         renderCities();
-        getBackgroundImage();
         getFiveDayForecast(event);
         $('#header-text').text(response.name);
         let currentWeatherHTML = `
@@ -193,7 +165,6 @@ function createEventListeners() {
         $('#search-city').val(event.target.textContent);
         currentCity=$('#search-city').val();
         getCurrentConditions(event);
-        getBackgroundImage();
     });
 
     $("#clear-storage").on("click", function(event){
