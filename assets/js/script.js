@@ -96,3 +96,36 @@ var saveCity(newCity) {
         localStorage.setItem('cities' + localStorage.length, newCity);
     }
 };
+
+var pullCities() {
+    $('#cities-results').empty();
+    if (localStorage.length === 0){
+        if (lastCity){
+            $('#search-city').attr("value", lastCity);
+        } else {
+            $('#search-city').attr("value", "Fort Worth");
+        }
+    } else {
+        let lastCityKey = "cities"+(localStorage.length-1);
+        lastCity = localStorage.getItem(lastCityKey);
+        $('#search-city').attr("value", lastCity);
+        for (let i = 0; i < localStorage.length; i++) {
+            let city = localStorage.getItem("cities" + i);
+            let cityEl;
+            if (currentCity===""){
+                currentCity=lastCity;
+            }
+            if (city === currentCity) {
+                cityEl = `<button type="button" class="list-group-item list-group-item-action active">${city}</button></li>`;
+            } else {
+                cityEl = `<button type="button" class="list-group-item list-group-item-action">${city}</button></li>`;
+            } 
+            $('#city-results').prepend(cityEl);
+        }
+        if (localStorage.length>0){
+            $('#clear-storage').html($('<a id="clear-storage" href="#">clear</a>'));
+        } else {
+            $('#clear-storage').html('');
+        }
+    }
+};
