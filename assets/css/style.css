@@ -1,0 +1,36 @@
+#header{
+    background-image: url('defaultBG.jpeg');
+    background-size:cover;
+    background-position-y: 50%;
+    color:white;
+    background-color:rgb(83, 83, 83);
+    position:relative !important;
+}
+
+#header h1{
+    font-size:5em;
+}
+
+#search-city{
+    width:80%;
+}
+
+#search-button-icon{
+    width:15px;
+    display:inline-block;
+}
+
+#city-results button{
+    text-transform: capitalize;
+}
+
+#clear-storage{
+    color:grey;
+    text-decoration: none;
+    font-size:.75em;
+    margin: .5em 0em 0em .5em;
+}
+
+.weather-card{
+    width: 9rem;
+}
