@@ -1,5 +1,5 @@
 #header{
-    background-image: url('defaultBG.jpeg');
+    background-image: url('./assets/images/defaultBG.jpeg');
     background-size:cover;
     background-position-y: 50%;
     color:white;
@@ -20,8 +20,8 @@
     display:inline-block;
 }
 
-#city-results button{
-    text-transform: capitalize;
+#current-weather {
+    padding-left: 15px;
 }
 
 #clear-storage{

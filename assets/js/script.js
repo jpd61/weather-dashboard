@@ -60,8 +60,7 @@ function getCurrentConditions(event) {
         getFiveDayForecast(event);
         $('#header-text').text(response.name);
         let currentWeatherHTML = `
-            <h3>Current Conditions<img src="${currentWeatherIcon}"></h3>
-            <h6>${currentMoment.format("MM/DD/YY h:mma")} local time</h6>
+            <h3>${response.name} ${currentMoment.format("(MM/DD/YY) h:mma")}<img src="${currentWeatherIcon}"></h3>
             <br>
             <ul class="list-unstyled">
                 <li>Temperature: ${response.main.temp}&#8457;</li>
