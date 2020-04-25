@@ -16,8 +16,6 @@ var handleErrors = (response) => {
     return response;
 }
 
-// https://api.jquery.com/jQuery.ajax/
-// https://www.xul.fr/en/html5/fetch.php
 var getCurrentConditions = (event) => {
     let city = $('#search-city').val();
     currentCity= $('#search-city').val();
@@ -54,6 +52,10 @@ var getCurrentConditions = (event) => {
         let uvQueryURL = "api.openweathermap.org/data/2.5/uvi?lat=" + latitude + "&lon=" + longitude + "&APPID=" + owmAPI;
         uvQueryURL = "https://cors-anywhere.herokuapp.com/" + uvQueryURL;
         fetch(uvQueryURL)
+        .then(handleErrors)
+        .then((response) => {
+            return response.json();
+        })
         .then((response) => {
             let uvIndex = response.value;
             $('#uvIndex').html(`UV Index: <span id="uvVal"> ${uvIndex}</span>`);
@@ -68,15 +70,15 @@ var getCurrentConditions = (event) => {
     })
 }
 
-// https://api.jquery.com/jQuery.ajax/
-// https://www.xul.fr/en/html5/fetch.php
 var getFiveDayForecast = (event) => {
     let city = $('#search-city').val();
     var queryURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + city + "&units=imperial" + "&APPID=" + owmAPI;
-    $.ajax({
-        url: queryURL,
-        method: "GET"
-    }).done((response) => {
+    fetch(queryURL)
+        .then (handleErrors)
+        .then((response) => {
+            return response.json();
+        })
+        .then((response) => {
         let fiveDayForecastHTML = `
         <h2>5-Day Forecast:</h2>
         <div id="fiveDayForecastUl" class="d-inline-flex flex-wrap ">`;
@@ -103,9 +105,6 @@ var getFiveDayForecast = (event) => {
         fiveDayForecastHTML += `</div>`;
         $('#five-day-forecast').html(fiveDayForecastHTML);
     })
-        .fail(() => {
-            console.log("Forecast API Error");
-        });
 }
 
 var saveCity = (newCity) => {
