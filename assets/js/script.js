@@ -93,7 +93,7 @@ var getFiveDayForecast = (event) => {
         let fiveDayForecastHTML = `
         <h2>5-Day Forecast:</h2>
         <div id="fiveDayForecastUl" class="d-inline-flex flex-wrap ">`;
-        // Loop over the 5 day forecast and build the template HTML
+        // Loop over the 5 day forecast and build the template HTML using UTC offset and Open Weather Map icon
         for (let i = 0; i < response.list.length; i++) {
             let dayData = response.list[i];
             let dayTimeUTC = dayData.dt;
@@ -186,7 +186,6 @@ var createEventListeners = () => {
     // New city search button
     $('#search-button').on("click", (event) => {
         event.preventDefault();
-        currentCity = $('#search-city').val();
         currentCity = $('#search-city').val();
         getCurrentConditions(event);
     });
