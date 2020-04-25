@@ -16,7 +16,7 @@ var getCurrentConditions = (event) => {
     // Obtain city name from the search box
     let city = $('#search-city').val();
     currentCity= $('#search-city').val();
-    // Set the queryURL to fetch from API - added units=imperial to fix
+    // Set the queryURL to fetch from API using weather search - added units=imperial to fix
     let queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&units=imperial" + "&APPID=" + owmAPI;
     fetch(queryURL)
     .then(handleErrors)
@@ -80,8 +80,8 @@ var getCurrentConditions = (event) => {
 // Function to obtain the five day forecast and display to HTML
 var getFiveDayForecast = (event) => {
     let city = $('#search-city').val();
-    // Set up URL for API search
-    var queryURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + city + "&units=imperial" + "&APPID=" + owmAPI;
+    // Set up URL for API search using forecast search
+    let queryURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + city + "&units=imperial" + "&APPID=" + owmAPI;
     // Fetch from API
     fetch(queryURL)
         .then (handleErrors)
