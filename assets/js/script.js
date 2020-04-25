@@ -1,8 +1,9 @@
+// Set global variables, including Open Weather Maps API Key
 var owmAPI = "788d5638d7c8e354a162d6c9747d1bdf";
 var currentCity = "";
 var lastCity = "";
 
-
+// Error handler for fetch, trying to mimic the AJAX .fail command: https://www.tjvantoll.com/2015/09/13/fetch-and-errors/
 var handleErrors = (response) => {
     if (!response.ok) {
         throw Error(response.statusText);
@@ -10,11 +11,10 @@ var handleErrors = (response) => {
     return response;
 }
 
+// Function to get and display the current conditions on Open Weather Maps
 var getCurrentConditions = (event) => {
     let city = $('#search-city').val();
     currentCity= $('#search-city').val();
-    let longitude;
-    let latitude;
     let queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&units=imperial" + "&APPID=" + owmAPI;
     fetch(queryURL)
     .then(handleErrors)
@@ -41,8 +41,8 @@ var getCurrentConditions = (event) => {
                 <li id="uvIndex">UV Index:</li>
             </ul>`;
         $('#current-weather').html(currentWeatherHTML);
-        latitude = response.coord.lat;
-        longitude = response.coord.lon;
+        let latitude = response.coord.lat;
+        let longitude = response.coord.lon;
         let uvQueryURL = "api.openweathermap.org/data/2.5/uvi?lat=" + latitude + "&lon=" + longitude + "&APPID=" + owmAPI;
         uvQueryURL = "https://cors-anywhere.herokuapp.com/" + uvQueryURL;
         fetch(uvQueryURL)
