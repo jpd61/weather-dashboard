@@ -2,9 +2,10 @@
 
 Created a dashboard that uses the [OpenWeather API](https://openweathermap.org/api) to retrieve weather data for cities that are searched for by user. Uses `localStorage` to store any cities that have been searched for prior and allows user to call them up quickly.
 
+
 **Live application deployed at: https://jpd61.github.io/weather-dashboard/**
 
-<div align="center">
+
 ![HTML5](https://img.shields.io/badge/HTML5-orange)
 ![CSS](https://img.shields.io/badge/CSS-blue)
 ![Javascript](https://img.shields.io/badge/Javascript-yellow)
@@ -12,11 +13,13 @@ Created a dashboard that uses the [OpenWeather API](https://openweathermap.org/a
 [![jQuery](https://img.shields.io/badge/jQuery-blue)](https://jquery.com/)
 [![Moment.js](https://img.shields.io/badge/Moment.js-green)](https://momentjs.com/)
 [![OpenWeather API](https://img.shields.io/badge/OpenWeather%20API-orange)](https://openweathermap.org/api)
-</div>
+
 
 The following image demonstrates the application functionality:
 
+
 <img src="./screenshot.PNG">
+
 
 ## User Story
 
