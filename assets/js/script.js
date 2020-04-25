@@ -181,35 +181,27 @@ var renderCities = () => {
     
 }
 
-// Create event listeners
-var createEventListeners = () => {
-    // New city search button
-    $('#search-button').on("click", (event) => {
-        event.preventDefault();
-        currentCity = $('#search-city').val();
-        getCurrentConditions(event);
-    });
 
-    // Old searched cities buttons
-    $('#city-results').on("click", (event) => {
-        event.preventDefault();
-        $('#search-city').val(event.target.textContent);
-        currentCity=$('#search-city').val();
-        getCurrentConditions(event);
-    });
+// New city search button
+$('#search-button').on("click", (event) => {
+event.preventDefault();
+currentCity = $('#search-city').val();
+getCurrentConditions(event);
+});
 
-    // Clear old searched cities from localStorage
-    $("#clear-storage").on("click", (event) => {
-        localStorage.clear();
-        renderCities();
-    });
-}
+// Old searched cities buttons
+$('#city-results').on("click", (event) => {
+    event.preventDefault();
+    $('#search-city').val(event.target.textContent);
+    currentCity=$('#search-city').val();
+    getCurrentConditions(event);
+});
 
-// Weather app
-var weatherApp = () => {
+// Clear old searched cities from localStorage
+$("#clear-storage").on("click", (event) => {
+    localStorage.clear();
     renderCities();
-    getCurrentConditions();
-    createEventListeners();
-}
+});
 
-weatherApp();
+renderCities();
+getCurrentConditions();
