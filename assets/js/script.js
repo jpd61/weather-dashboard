@@ -181,7 +181,9 @@ var renderCities = () => {
     
 }
 
+// Create event listeners
 var createEventListeners = () => {
+    // New city search button
     $('#search-button').on("click", (event) => {
         event.preventDefault();
         currentCity = $('#search-city').val();
@@ -189,6 +191,7 @@ var createEventListeners = () => {
         getCurrentConditions(event);
     });
 
+    // Old searched cities buttons
     $('#city-results').on("click", (event) => {
         event.preventDefault();
         $('#search-city').val(event.target.textContent);
@@ -196,16 +199,18 @@ var createEventListeners = () => {
         getCurrentConditions(event);
     });
 
+    // Clear old searched cities from localStorage
     $("#clear-storage").on("click", (event) => {
         localStorage.clear();
         renderCities();
     });
 }
 
-var mainApp = () => {
+// Weather app
+var weatherApp = () => {
     renderCities();
     getCurrentConditions();
     createEventListeners();
 }
 
-mainApp();
+weatherApp();
