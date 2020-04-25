@@ -9,6 +9,13 @@ var getURLParams = () => {
     }
 }
 
+var handleErrors = (response) => {
+    if (!response.ok) {
+        throw Error(response.statusText);
+    }
+    return response;
+}
+
 // https://api.jquery.com/jQuery.ajax/
 // https://www.xul.fr/en/html5/fetch.php
 var getCurrentConditions = (event) => {
@@ -17,10 +24,12 @@ var getCurrentConditions = (event) => {
     let longitude;
     let latitude;
     let queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&units=imperial" + "&APPID=" + owmAPI;
-    $.ajax({
-        url: queryURL,
-        method: "GET"
-    }).done((response) => {
+    fetch(queryURL)
+    .then(handleErrors)
+    .then((response) => {
+        return response.json();
+    })
+    .then((response) => {
         saveCity(city);
         $('#search-error').text("");
         let currentWeatherIcon="https://openweathermap.org/img/w/" + response.weather[0].icon + ".png";
@@ -44,10 +53,8 @@ var getCurrentConditions = (event) => {
         longitude = response.coord.lon;
         let uvQueryURL = "api.openweathermap.org/data/2.5/uvi?lat=" + latitude + "&lon=" + longitude + "&APPID=" + owmAPI;
         uvQueryURL = "https://cors-anywhere.herokuapp.com/" + uvQueryURL;
-        $.ajax({
-            url: uvQueryURL,
-            method: "GET"
-        }).done((response) => {
+        fetch(uvQueryURL)
+        .then((response) => {
             let uvIndex = response.value;
             $('#uvIndex').html(`UV Index: <span id="uvVal"> ${uvIndex}</span>`);
             if (uvIndex>=0 && uvIndex<3){
@@ -59,10 +66,6 @@ var getCurrentConditions = (event) => {
             }
         });
     })
-        .fail(() => {
-            console.log("Current Weather API Error: city likely not found.");
-            $('#search-error').text("City not found.");
-        });
 }
 
 // https://api.jquery.com/jQuery.ajax/
