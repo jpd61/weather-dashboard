@@ -15,15 +15,17 @@
 </head>
 
 <body>
-   
+    <!-- Jumbotron to display the City name upon search -->
     <div id="header" class="jumbotron jumbotron-fluid text-container">
         <h1 id="header-text" class="display-2"></h1>
         <div id="artist-credit"></div>
     </div>
 
+    <!-- Main container for webpage content -->
     <div id="content" class="container">
         <div class="row">
 
+            <!-- Left side content with city search box and appended cities -->
             <div id="content-left" class="col-md-3">
                 <form>
                     <label for="search-city">Search for a City:</label>
@@ -37,15 +39,13 @@
                 <a id="clear-storage" href="#"></a>    
             </div>
 
-
+            <!-- Right side content showing current weather and five day forecast displays on search -->
             <div id="content-right" class="col-md-9 pt-4">
                 <div id="current-weather" class="border rounded"></div>
                 <div id="five-day-forecast" class="mt-5"></div>
             </div>
         </div>
     </div>
-
-    <!-- Scripts in Use -->
 
     <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
@@ -56,5 +56,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
     <!-- Custom Script -->
     <script src="./assets/js/script.js"></script>
+    
 </body>
 </html>
