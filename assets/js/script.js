@@ -153,21 +153,21 @@ function renderCities() {
 }
 
 function createEventListeners() {
-    $('#search-button').on("click", function (event) {
+    $('#search-button').on("click", (event) => {
         event.preventDefault();
         currentCity = $('#search-city').val();
         currentCity = $('#search-city').val();
         getCurrentConditions(event);
     });
 
-    $('#city-results').on("click", function (event) {
+    $('#city-results').on("click", (event) => {
         event.preventDefault();
         $('#search-city').val(event.target.textContent);
         currentCity=$('#search-city').val();
         getCurrentConditions(event);
     });
 
-    $("#clear-storage").on("click", function(event){
+    $("#clear-storage").on("click", (event) => {
         localStorage.clear();
         renderCities();
     });
