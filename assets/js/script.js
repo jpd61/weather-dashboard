@@ -20,7 +20,7 @@ function getCurrentConditions(event) {
     $.ajax({
         url: queryURL,
         method: "GET"
-    }).done(function (response) {
+    }).done((response) => {
         saveCity(city);
         $('#search-error').text("");
         let currentWeatherIcon="https://openweathermap.org/img/w/" + response.weather[0].icon + ".png";
@@ -47,7 +47,7 @@ function getCurrentConditions(event) {
         $.ajax({
             url: uvQueryURL,
             method: "GET"
-        }).done(function (response) {
+        }).done((response) => {
             let uvIndex = response.value;
             $('#uvIndex').html(`UV Index: <span id="uvVal"> ${uvIndex}</span>`);
             if (uvIndex>=0 && uvIndex<3){
@@ -73,7 +73,7 @@ function getFiveDayForecast(event) {
     $.ajax({
         url: queryURL,
         method: "GET"
-    }).done(function (response) {
+    }).done((response) => {
         let fiveDayForecastHTML = `
         <h2>5-Day Forecast:</h2>
         <div id="fiveDayForecastUl" class="d-inline-flex flex-wrap ">`;
