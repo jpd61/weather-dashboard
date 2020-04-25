@@ -2,7 +2,7 @@ var owmAPI = "788d5638d7c8e354a162d6c9747d1bdf";
 var currentCity = "";
 var lastCity = "";
 
-function getURLParams() {
+var getURLParams = () => {
     let urlParams = new URLSearchParams(window.location.search);
     if (urlParams.has('key')) {
         owmAPI = urlParams.get('key');
@@ -11,7 +11,7 @@ function getURLParams() {
 
 // https://api.jquery.com/jQuery.ajax/
 // https://www.xul.fr/en/html5/fetch.php
-function getCurrentConditions(event) {
+var getCurrentConditions = (event) => {
     let city = $('#search-city').val();
     currentCity= $('#search-city').val();
     let longitude;
@@ -59,7 +59,7 @@ function getCurrentConditions(event) {
             }
         });
     })
-        .fail(function () {
+        .fail(() => {
             console.log("Current Weather API Error: city likely not found.");
             $('#search-error').text("City not found.");
         });
@@ -67,7 +67,7 @@ function getCurrentConditions(event) {
 
 // https://api.jquery.com/jQuery.ajax/
 // https://www.xul.fr/en/html5/fetch.php
-function getFiveDayForecast(event) {
+var getFiveDayForecast = (event) => {
     let city = $('#search-city').val();
     var queryURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + city + "&units=imperial" + "&APPID=" + owmAPI;
     $.ajax({
@@ -105,7 +105,7 @@ function getFiveDayForecast(event) {
         });
 }
 
-function saveCity(newCity) {
+var saveCity = (newCity) => {
     let cityExists = false;
     for (let i = 0; i < localStorage.length; i++) {
         if (localStorage["cities" + i] === newCity) {
@@ -118,7 +118,7 @@ function saveCity(newCity) {
     }
 }
 
-function renderCities() {
+var renderCities = () => {
     $('#city-results').empty();
     if (localStorage.length===0){
         if (lastCity){
@@ -152,7 +152,7 @@ function renderCities() {
     
 }
 
-function createEventListeners() {
+var createEventListeners = () => {
     $('#search-button').on("click", (event) => {
         event.preventDefault();
         currentCity = $('#search-city').val();
@@ -173,7 +173,7 @@ function createEventListeners() {
     });
 }
 
-function mainApp() {
+var mainApp = () => {
     getURLParams();
     renderCities();
     getCurrentConditions();
