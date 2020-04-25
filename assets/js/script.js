@@ -100,7 +100,7 @@ function getFiveDayForecast(event) {
         fiveDayForecastHTML += `</div>`;
         $('#five-day-forecast').html(fiveDayForecastHTML);
     })
-        .fail(function () {
+        .fail(() => {
             console.log("Forecast API Error");
         });
 }
