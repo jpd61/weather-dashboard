@@ -77,18 +77,23 @@ var getCurrentConditions = (event) => {
     })
 }
 
+// Function to obtain the five day forecast and display to HTML
 var getFiveDayForecast = (event) => {
     let city = $('#search-city').val();
+    // Set up URL for API search
     var queryURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + city + "&units=imperial" + "&APPID=" + owmAPI;
+    // Fetch from API
     fetch(queryURL)
         .then (handleErrors)
         .then((response) => {
             return response.json();
         })
         .then((response) => {
+        // HTML template
         let fiveDayForecastHTML = `
         <h2>5-Day Forecast:</h2>
         <div id="fiveDayForecastUl" class="d-inline-flex flex-wrap ">`;
+        // Loop over the 5 day forecast and build the template HTML
         for (let i = 0; i < response.list.length; i++) {
             let dayData = response.list[i];
             let dayTimeUTC = dayData.dt;
@@ -96,6 +101,7 @@ var getFiveDayForecast = (event) => {
             let timeZoneOffsetHours = timeZoneOffset / 60 / 60;
             let thisMoment = moment.unix(dayTimeUTC).utc().utcOffset(timeZoneOffsetHours);
             let iconURL = "https://openweathermap.org/img/w/" + dayData.weather[0].icon + ".png";
+            // Only displaying mid-day forecasts
             if (thisMoment.format("HH:mm:ss") === "11:00:00" || thisMoment.format("HH:mm:ss") === "12:00:00" || thisMoment.format("HH:mm:ss") === "13:00:00") {
                 fiveDayForecastHTML += `
                 <div class="weather-card card m-2 p0">
@@ -109,26 +115,33 @@ var getFiveDayForecast = (event) => {
                 </div>`;
             }
         }
+        // Build the HTML template
         fiveDayForecastHTML += `</div>`;
+        // Append the five-day forecast to the DOM
         $('#five-day-forecast').html(fiveDayForecastHTML);
     })
 }
 
+// Function to save the city to localStorage
 var saveCity = (newCity) => {
     let cityExists = false;
+    // Check if City exists in local storage
     for (let i = 0; i < localStorage.length; i++) {
         if (localStorage["cities" + i] === newCity) {
             cityExists = true;
             break;
         }
     }
+    // Save to localStorage if city is new
     if (cityExists === false) {
         localStorage.setItem('cities' + localStorage.length, newCity);
     }
 }
 
+// Render the list of searched cities
 var renderCities = () => {
     $('#city-results').empty();
+    // If localStorage is empty
     if (localStorage.length===0){
         if (lastCity){
             $('#search-city').attr("value", lastCity);
@@ -136,8 +149,10 @@ var renderCities = () => {
             $('#search-city').attr("value", "Austin");
         }
     } else {
+        // Build key of last city written to localStorage
         let lastCityKey="cities"+(localStorage.length-1);
         lastCity=localStorage.getItem(lastCityKey);
+        // Set search input to last city searched
         $('#search-city').attr("value", lastCity);
         for (let i = 0; i < localStorage.length; i++) {
             let city = localStorage.getItem("cities" + i);
