@@ -1,19 +1,28 @@
-# Weather Dashboard
+<h1 align="center">Weather Dashboard 👋</h1>
+
+<p align="center">
+    <img src="https://img.shields.io/github/repo-size/jpd61/README-generator" />
+    <img src="https://img.shields.io/github/languages/top/jpd61/README-generator"  />
+    <img src="https://img.shields.io/github/issues/jpd61/README-generator" />
+    <img src="https://img.shields.io/github/last-commit/jpd61/README-generator" >
+    <a href="https://twitter.com/jpdewoody">
+        <img alt="Twitter: jpdewoody" src="https://img.shields.io/twitter/follow/jpdewoody.svg?style=social" target="_blank" />
+    </a>
+</p>
+
+<p align="center">
+    <img src="https://img.shields.io/badge/Javascript-yellow" />
+    <img src="https://img.shields.io/badge/jQuery-blue"  />
+    <img src="https://img.shields.io/badge/HTML5-orange" />
+    <img src="https://img.shields.io/badge/Bootstrap-purple" >
+    <img src="https://img.shields.io/badge/Moment.js-green" />
+    <img src="https://img.shields.io/badge/OpenWeather%20API-orange" />
+</p>
 
 Created a dashboard that uses the [OpenWeather API](https://openweathermap.org/api) to retrieve weather data for cities that are searched for by user. Uses `localStorage` to store any cities that have been searched for prior and allows user to call them up quickly.  
 
 
 **Live application deployed at: https://jpd61.github.io/weather-dashboard/**  
-
-
-![HTML5](https://img.shields.io/badge/HTML5-orange)
-![CSS](https://img.shields.io/badge/CSS-blue)
-![Javascript](https://img.shields.io/badge/Javascript-yellow)
-![Bootstrap](https://img.shields.io/badge/Bootstrap-purple)
-[![jQuery](https://img.shields.io/badge/jQuery-blue)](https://jquery.com/)
-[![Moment.js](https://img.shields.io/badge/Moment.js-green)](https://momentjs.com/)
-[![OpenWeather API](https://img.shields.io/badge/OpenWeather%20API-orange)](https://openweathermap.org/api)  
-
 
 The following image demonstrates the application functionality:
 
